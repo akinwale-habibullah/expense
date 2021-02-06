@@ -1,14 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const app = require('./server/index');
 
-const app = express();
+mongoose.connect('mongodb://localhost:27017/expense');
+
 const PORT = 3000;
-
-app.use(bodyParser.urlencoded({ extended: true}));
-app.use(bodyParser.json());
-
-app.get("/", (req, res) => {
-    res.send("Expese tracker app.");
-});
-
 app.listen(PORT, () => console.log(`Server running at PORT ${PORT}`));
