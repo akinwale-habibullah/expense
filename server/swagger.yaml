@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  description: "API documentation for expense app. Find out more [here](https://github.com/akinwale-habibullah/expense)"
+  version: 1.0.0
+  title: Expense API
+  contact:
+    email: akinwalehabib@hotmail.com
+  license:
+    name: MIT
+    url: https://github.com/akinwale-habibullah/expense/LICENSE
+tags:
+  - name: expense
+    description: Everything about your expense
+paths:
+  /expense:
+    post:
+      tags:
+        - expense
+      summary: Create a new expense
+      description: ""
+      operationId: addExpense
+      requestBody:
+        $ref: "#/components/requestBodies/NewExpense"
+      responses:
+        "200":
+          $ref: '#/components/responses/NewExpenseSuccess'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+    get:
+      tags:
+        - expense
+      summary: Get all expenses
+      description: ""
+      operationId: getExpenses
+      responses:
+        "200":
+          $ref: '#/components/responses/getAllExpense'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+    delete:
+      tags:
+        - expense
+      summary: Delete all expense records
+      description: ""
+      operationId: deleteExpenses
+      responses:
+        "200":
+          $ref: '#/components/responses/SuccessNoData'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+    patch:
+      tags:
+        - expense
+      summary: restore current expense state using captured expense events.
+      description: ""
+      operationId: restoreExpenses
+      responses:
+        "200":
+          $ref: '#/components/responses/SuccessNoData'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+  /expense/{id}:
+    get:
+      tags:
+        - expense
+      summary: Get all expenses
+      description: ""
+      operationId: getAnExpenses
+      parameters:
+        - $ref: '#/components/parameters/GetOneExpense'
+      responses:
+        "200":
+          $ref: '#/components/responses/GetExpenseSuccess'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+    delete:
+      tags:
+        - expense
+      summary: Delete an expense
+      description: ""
+      operationId: deleteAnExpenses
+      parameters:
+        - $ref: '#/components/parameters/DeleteOneExpense'
+      responses:
+        "200":
+          $ref: '#/components/responses/SuccessNoData'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+  /expense/{id}/description:
+    patch:
+      tags:
+        - expense
+      summary: Update expense description
+      description: ""
+      operationId: updateExpenseDescription
+      parameters:
+        - $ref: '#/components/parameters/UpdateDescription'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateDescription'
+      responses:
+        "200":
+          $ref: '#/components/responses/NewExpenseSuccess'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+  /expense/{date}: 
+    patch:
+      tags:
+        - expense
+      summary: Restore expenses up till a given date
+      description: ""
+      operationId: restoreExpensesTillDate
+      parameters:
+        - $ref: '#/components/parameters/RestoreExpenseTillDate'
+      responses:
+        "200":
+          $ref: '#/components/responses/SuccessNoData'
+        "405":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/Error'
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:3000/api/v1
+components:
+  parameters:
+    GetOneExpense:
+        name: id
+        in: path
+        description: Read expense using expense id
+        required: true
+        schema:
+          type: string
+          example: 601f364d9f603e7f648fcf2c  
+        example: 601f364d9f603e7f648fcf2c  
+    DeleteOneExpense:
+      name: id
+      in: path
+      description: Delete expense record using expense id
+      required: true
+      schema:
+        type: string
+        example: 601f364d9f603e7f648fcf2c  
+      example: 601f364d9f603e7f648fcf2c 
+    UpdateDescription:
+      name: id
+      in: path
+      description: Update expense description using expense id.
+      required: true
+      schema:
+        type: string
+        example: 601f364d9f603e7f648fcf2c  
+      example: 601f364d9f603e7f648fcf2c 
+    RestoreExpenseTillDate:
+      name: date
+      in: path
+      description: Restore expenses using the given date as a filter.
+      required: true
+      schema:
+        type: string
+        example: 01/01/2020 
+      example: 01/01/2020
+  requestBodies:
+    NewExpense:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NewExpense"
+      description: Create an expense record
+      required: true
+    UpdateDescription:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateDescription"
+      description: Create an expense record
+      required: true
+  responses:
+    SuccessNoData:
+      description: "success"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessNoData'
+    Unauthorized:
+      description: "Unauthorized request. Incomplete request"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthorized'
+    Error:
+      description: "Error occured while processing request"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GetExpenseSuccess:
+     description: "Successfully retrieved expense record"
+     content:
+       application/json:
+         schema:
+           $ref: '#/components/schemas/NewExpenseSuccess'
+    NewExpenseSuccess:
+     description: "Successfully created new expense record"
+     content:
+       application/json:
+         schema:
+           $ref: '#/components/schemas/NewExpenseSuccess'
+    getAllExpense:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/GetAllExpense'
+    UpdateExpense:
+     description: "Successfully updated expense description"
+     content:
+       application/json:
+         schema:
+           $ref: '#/components/schemas/NewExpenseSuccess'
+  schemas:
+    SuccessNoData:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: string
+          example: "null"
+    Unauthorized:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "fail"
+        data:
+          type: object
+          example: { "amount" : "amount is required" }
+    Error:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "Error"
+        data: 
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Error occured while processing request. Please try again later."
+          example: { "error"}
+    NewExpense:
+      type: object
+      required:
+        - amount
+        - description
+      properties:
+        amount:
+          type: number
+          format: float
+          example: 1.3
+        description:
+          type: string
+          example: Bought XY item
+    UpdateDescription:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+          example: Bought XY item
+    NewExpenseSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+
+            _id:
+              type: string
+              example: 601f364d9f603e7f648fcf2c
+            description:
+              type: string
+              example: Bought XY item
+            amount:
+              type: number
+              format: float
+              example: 20.0
+          required:
+            - _id
+            - description
+            - amount
+    GetAllExpense:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: 601f364d9f603e7f648fcf2c
+            description:
+              type: string
+              example: Bought XY item
+            amount:
+              type: number
+              format: float
+              example: 20.0
+      required:
+        - _id
+        - description
+        - amount
