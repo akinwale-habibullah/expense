@@ -14,9 +14,19 @@ router.get("/:id", (req, res) => {
 
 router.post("/", async (req, res) => {
     const createEvent = E.eventHandlers.createExpense({ expenseId: uuid.v4() });
-    const expense = E.reduceEvents([createEvent]);
+    const expense = await E.reduceEvents([createEvent]); // helps persist data 
 
-    res.json(expense);
+    res.json(createEvent);
 });
+
+router.put("/:id", async (req, res) => {
+    const expenseId = req.params.id;
+    const { description } = req.body;
+
+    // Persist expenseEvent using E.eventHandlers.updateDescription
+    // Update expenseModel by calling reduceEvents ( [ createdEvent ])
+
+    res.send(expenseId);
+})
 
 module.exports = router;

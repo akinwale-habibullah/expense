@@ -1,0 +1,365 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "API documentation for expense app. Find out more [here](https://github.com/akinwale-habibullah/expense)",
+      "version": "1.0.0",
+      "title": "Expense API",
+      "contact": {
+        "email": "akinwalehabib@hotmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://github.com/akinwale-habibullah/expense/LICENSE"
+      }
+    },
+    "tags": [
+      {
+        "name": "expense",
+        "description": "Everything about your expense"
+      }
+    ],
+    "paths": {
+      "/expense": {
+        "post": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Create a new expense",
+          "description": "",
+          "operationId": "addExpense",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/NewExpenseRequestBody"
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NewExpenseSuccessResponse"
+                  }
+                }
+              }
+            },
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Get all expenses",
+          "description": "",
+          "operationId": "getExpenses",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GetExpensesSuccessResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Delete all expenses",
+          "description": "",
+          "operationId": "deleteExpenses",
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "restore expense using captured expense events.",
+          "description": "",
+          "operationId": "restoreExpenses",
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/expense/{id}": {
+        "get": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Get all expenses",
+          "description": "",
+          "operationId": "getAnExpenses",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Expense to be read",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "601f364d9f603e7f648fcf2c"
+              },
+              "example": "601f364d9f603e7f648fcf2c"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetExpensesSuccessResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Delete an expenses",
+          "description": "",
+          "operationId": "deleteAnExpenses",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Expense to be deleted",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "601f364d9f603e7f648fcf2c"
+              },
+              "example": "601f364d9f603e7f648fcf2c"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "success"
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/expense/{id}/description": {
+        "patch": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Update expense description",
+          "description": "",
+          "operationId": "updateExpenseDescription",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Expense to be deleted",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "601f364d9f603e7f648fcf2c"
+              },
+              "example": "601f364d9f603e7f648fcf2c"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/UpdateDescriptionBody"
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "success"
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/expense/{date}": {
+        "patch": {
+          "tags": [
+            "expense"
+          ],
+          "summary": "Restore expenses up till given date",
+          "description": "",
+          "operationId": "restoreExpensesTillDate",
+          "parameters": [
+            {
+              "name": "date",
+              "in": "path",
+              "description": "date for filter",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "01/01/2020"
+              },
+              "example": "01/01/2020"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    },
+    "servers": [
+      {
+        "url": "https://localhost:3000/api/v1"
+      }
+    ],
+    "components": {
+      "requestBodies": {
+        "NewExpenseRequestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewExpense"
+              }
+            }
+          },
+          "description": "Create an expense record",
+          "required": true
+        },
+        "UpdateDescriptionBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDescription"
+              }
+            }
+          },
+          "description": "Create an expense record",
+          "required": true
+        }
+      },
+      "schemas": {
+        "NewExpense": {
+          "type": "object",
+          "required": [
+            "amount",
+            "description"
+          ],
+          "properties": {
+            "amount": {
+              "type": "number",
+              "format": "float",
+              "example": 1.3
+            },
+            "description": {
+              "type": "string",
+              "example": "Bought XY item"
+            }
+          }
+        },
+        "UpdateDescription": {
+          "type": "object",
+          "required": [
+            "description"
+          ],
+          "properties": {
+            "description": {
+              "type": "string",
+              "example": "Bought XY item"
+            }
+          }
+        },
+        "NewExpenseSuccessResponse": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "601f364d9f603e7f648fcf2c"
+            },
+            "description": {
+              "type": "string",
+              "example": "Bought XY item"
+            },
+            "amount": {
+              "type": "number",
+              "format": "float",
+              "example": 20
+            }
+          },
+          "required": [
+            "_id",
+            "description",
+            "amount"
+          ]
+        },
+        "GetExpensesSuccessResponse": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "601f364d9f603e7f648fcf2c"
+            },
+            "description": {
+              "type": "string",
+              "example": "Bought XY item"
+            },
+            "amount": {
+              "type": "number",
+              "format": "float",
+              "example": 20
+            }
+          },
+          "required": [
+            "_id",
+            "description",
+            "amount"
+          ]
+        }
+      }
+    }
+  }

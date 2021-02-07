@@ -1,9 +1,8 @@
 const eventTypes = require('./eventTypes');
-const Expense = require('../models/expense');
+const Expense = require('../models/expenseModel');
 
 const reduce = async expenseEvent => {
     console.log(`Trying to apply ${expenseEvent.type} - ${expenseEvent.data}`);
-    console.log("expense event: ", expenseEvent);
     console.log("--------------------------");
 
     if (expenseEvent.type === eventTypes.createExpense) {

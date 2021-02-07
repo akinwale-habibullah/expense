@@ -1,14 +1,13 @@
-const expenseEvent = require('./expenseEvent');
 const eventTypes = require('./eventTypes');
-const expense = require("../models/expense");
+const expenseModel = require("../models/expenseModel");
+const expenseEvent = require('./expenseEvent');
+const eventHandlers = require('./eventHandlers');
 const reduceEvents = require('./reducer');
 
-const eventHandlers = require('./eventHandlers');
-
 module.exports = {
-    expense,
-    expenseEvent,
     eventTypes,
+    expenseModel,
+    expenseEvent,
     eventHandlers,
     reduceEvents
 };
