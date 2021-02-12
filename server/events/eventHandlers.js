@@ -1,4 +1,3 @@
-const expense = require("../models/expenseModel");
 const eventTypes = require("./eventTypes");
 const ExpenseEvent = require('./expenseEvent');
 
@@ -15,10 +14,12 @@ const makeExpenseEvent = type => (data = {}) => {
     });
 };
 
-const createExpense = makeExpenseEvent(eventTypes.createExpense);
-const updateDescription = makeExpenseEvent(eventTypes.updateDescription);
+const createExpenseEvent = makeExpenseEvent(eventTypes.createExpense);
+const updateDescriptionEvent = makeExpenseEvent(eventTypes.updateDescription);
+const updateAmountEvent = makeExpenseEvent(eventTypes.updateAmount);
 
 module.exports = { 
-    createExpense,
-    updateDescription
+    createExpenseEvent,
+    updateDescriptionEvent,
+    updateAmountEvent
 };
